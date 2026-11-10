@@ -1,0 +1,12 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{defaults,sphereUV,wrap,strokePoints,validateProject,History}from'../src/model.js';
+const good={...defaults,layers:[{name:'Paint',opacity:1,visible:true,png:'data:image/png;base64,AAAA'}]};
+test('front center maps to consistent sphere UV',()=>{const a=sphereUV(0,0,0);assert.equal(a.u,.75);assert.equal(a.v,.5);assert.equal(a.z,1);});
+test('outside sphere is not paintable',()=>assert.equal(sphereUV(1,1),null));
+test('rotation moves longitude while preserving latitude',()=>{assert.ok(Math.abs(sphereUV(0,0,Math.PI).u-.25)<1e-8);assert.equal(sphereUV(.5,.5,1).v,sphereUV(.5,.5,0).v);});
+test('wrap supports either seam direction',()=>{assert.ok(Math.abs(wrap(-.2)-.8)<1e-10);assert.ok(Math.abs(wrap(1.2)-.2)<1e-10);});
+test('strokes interpolate shortest route across UV seam',()=>{const pts=strokePoints({u:.99,v:.5},{u:.01,v:.5},2);assert.ok(pts.length<10);assert.ok(pts.every(p=>p.u>.98||p.u<.02));});
+test('strokes fill large gaps',()=>{const pts=strokePoints({u:.2,v:.1},{u:.4,v:.9},4);assert.ok(pts.length>100);assert.ok(Math.abs(pts.at(-1).v-.9)<1e-12);});
+test('valid project copies trusted fields only',()=>{const x=validateProject({...good,unexpected:1});assert.equal(x.unexpected,undefined);assert.notEqual(x.layers,good.layers);});
+test('invalid project and oversized content rejected',()=>{for(const x of [{...good,version:8},{...good,roughness:NaN},{...good,metallic:1.1},{...good,layers:[]},{...good,layers:Array(7).fill(good.layers[0])},{...good,layers:[{...good.layers[0],png:'https://example.com/x.png'}]},{...good,layers:[{...good.layers[0],opacity:-1}]}])assert.throws(()=>validateProject(x));});
+test('undo and redo preserve snapshots and branch correctly',()=>{const h=new History(good);h.push({...good,name:'A'});assert.equal(h.undo().name,good.name);assert.equal(h.redo().name,'A');h.undo();h.push({...good,name:'B'});assert.equal(h.redo().name,'B');});
+test('history bounded at twenty edits',()=>{const h=new History(good);for(let i=0;i<50;i++)h.push({...good,name:''+i});assert.equal(h.states.length,21);});

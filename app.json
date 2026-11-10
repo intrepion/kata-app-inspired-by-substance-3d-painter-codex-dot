@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "app",
+  "title": "Kata Patina Lab",
+  "repository": "kata-app-inspired-by-substance-3d-painter-codex-dot",
+  "section": "Kata Tool Shed",
+  "category": "3D & Animation",
+  "tagline": "Every surface tells a story.",
+  "description": "Every surface tells a story.",
+  "entryPoint": "index.html",
+  "status": "local-prototype",
+  "toolShedUrl": "https://intrepion.github.io/tools/",
+  "screenshots": [
+    "docs/screenshots/desktop.png",
+    "docs/screenshots/narrow.png"
+  ],
+  "inspiration": {
+    "name": "Substance 3D Painter",
+    "url": "https://www.adobe.com/products/substance3d/apps/painter.html"
+  },
+  "license": "MIT",
+  "features": [
+    "Direct sphere painting and linked UV canvas",
+    "Round and dry-grain brushes",
+    "Layer-local eraser",
+    "Six raster layers with visibility and opacity",
+    "Layer rename, reorder and removal",
+    "Twenty-edit undo and redo",
+    "Roughness and metallic shading preview",
+    "PNG base-color and uniform material maps",
+    "Editable layered project import and export",
+    "Best-effort browser autosave"
+  ]
+}
