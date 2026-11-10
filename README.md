@@ -76,3 +76,8 @@ Projects validate format, material ranges, 1–6 layers, opacity and names. Only
 MIT, see [LICENSE](LICENSE). All code, design, palettes and the procedural ceramic study are original. [Substance 3D Painter](https://www.adobe.com/products/substance3d/apps/painter.html) is an Adobe product. This independent exercise is not affiliated with or endorsed by Adobe and has no proprietary file compatibility. The combined `.gitignore` covers Windows, macOS, Linux/Unix, editors, builds and local secrets.
 
 This is an independent educational kata. See the QA notes for verification scope and limitations.
+
+
+## Published app
+
+Open [Kata Patina Lab](https://intrepion.github.io/kata-app-inspired-by-substance-3d-painter-codex-dot/). The public repository uses GitHub Actions to verify and deploy `dist/` from `main`. See [QA notes](docs/QA.md) for local verification and known limits.
